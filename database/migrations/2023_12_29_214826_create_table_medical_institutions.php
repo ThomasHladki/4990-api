@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('educational_institutions', function (Blueprint $table) {
+        Schema::create('medical_institutions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('medical_school_name')->unique();
+            $table->string('type');
             $table->string('street_address');
             $table->string('city');
             $table->string('province');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('educational_institutions');
+        Schema::drop('medical_institutions');
     }
 };
