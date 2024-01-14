@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('student_grades', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('dob');
-            $table->string('gender');
-            $table->unsignedBigInteger('medical_institution_id');
-            $table->string('medical_discipline');
-            $table->foreign('medical_institution_id')->references('id')->on('medical_institutions');
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->string('course_code');
+            $table->integer('grade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('student_grades');
     }
 };

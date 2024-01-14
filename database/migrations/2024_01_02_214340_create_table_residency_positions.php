@@ -14,13 +14,17 @@ return new class extends Migration
         Schema::create('residency_positions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('status');
             $table->text('description');
-            $table->string('specialization');
+            $table->string('medical_discipline');
             $table->unsignedBigInteger('doctor_id');
             $table->foreign('doctor_id')->references('id')->on('doctors');
             $table->unsignedBigInteger('medical_institution_id');
             $table->foreign('medical_institution_id')->references('id')->on('medical_institutions');
-            $table->float('grade')->nullable();
+            $table->float('grade_avg_requirement')->nullable();
+            $table->boolean('letter_of_reccomendation_req');
+            $table->boolean('research_focused');
+            $table->boolean('prefers_new_grads');
             $table->timestamps();
             $table->softDeletes();
         });
