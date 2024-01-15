@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_residency_position_matches', function (Blueprint $table) {
+        Schema::create('residency_position_matches', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->unsignedBigInteger('residency_position_id');
+            $table->foreign('residency_position_id')->references('id')->on('residency_positions');
+            $table->integer('match_score');
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_residency_position_matches');
+        Schema::dropIfExists('residency_position_matches');
     }
 };
