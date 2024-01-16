@@ -20,4 +20,9 @@ class ResidencyPosition extends Model
     {
         return $this->hasMany(ResidencyPositionGrade::class);
     }
+
+    public function residencyPositionMatches(): HasMany
+    {
+        return $this->hasMany(ResidencyPositionMatch::class);
+    }
 }
