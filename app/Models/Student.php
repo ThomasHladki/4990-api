@@ -31,9 +31,4 @@ class Student extends Model
     {
         return $this->hasOne(StudentLocationPreference::class);
     }
-
-    public function residencyPositionMatches(): HasMany
-    {
-        return $this->hasMany(ResidencyPositionMatch::class);
-    }
 }
