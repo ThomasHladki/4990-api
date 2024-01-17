@@ -1,5 +1,8 @@
 <?php
+use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
+use App\Models\StudentGrade;
+use App\Models\StudentLocationPreference;
 
 
 class StudentService{
@@ -17,6 +20,7 @@ class StudentService{
 
     public function createStudent(CreateStudentRequest $request): Student
     {
+        /** @var Student $student */
         $student = Student::insert([
             'name' => $request->name,
             'dob' => $request->dob,
@@ -29,4 +33,29 @@ class StudentService{
 
         return $student;
     }
+
+    public function getGrades(int $studentId): array
+    {
+        return StudentGrade::query()
+            ->where('student_id', '=', $studentId)
+            ->get();
+    }
+
+    public function getLocationPreference(int $studentId): StudentLocationPreference|null
+    {
+        /** @var StudentLocationPreference|null $preference */
+        $preference = StudentLocationPreference::query()
+            ->where('student_id', '=', $studentId)
+            ->first();
+        return $preference;
+    }
+
+    public function getMatches(int $studentId): array
+    {
+        return ResidencyPositionMatch::query()
+            ->where('student_id', '=', $studentId)
+            ->orderBy('match_score')
+            ->get();
+    }
+
 }
