@@ -21,7 +21,7 @@ class StudentService{
     public function createStudent(CreateStudentRequest $request): Student
     {
         /** @var Student $student */
-        $student = Student::insert([
+        $student = Student::create([
             'name' => $request->name,
             'dob' => $request->dob,
             'gender' => $request->gender,
@@ -56,6 +56,16 @@ class StudentService{
             ->where('student_id', '=', $studentId)
             ->orderBy('match_score', 'DESC')
             ->get();
+    }
+
+    public function createStudentGrade(CreateStudentGradeRequest $request): StudentGrade
+    {
+        return StudentGrade::create([
+            'student_id' => $request->student_id,
+            'course_code' => $request->course_code,
+            'grade' => $request->grade
+        ])
+            
     }
 
 }
