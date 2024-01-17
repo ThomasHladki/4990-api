@@ -54,7 +54,7 @@ class StudentService{
     {
         return ResidencyPositionMatch::query()
             ->where('student_id', '=', $studentId)
-            ->orderBy('match_score')
+            ->orderBy('match_score', 'DESC')
             ->get();
     }
 
