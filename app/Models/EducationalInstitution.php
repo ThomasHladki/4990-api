@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @var Integer $id
- * @var string $name
- * @var string $medical_school_name
- * @var string $street_address
- * @var string $city
- * @var string $province
- * @var string $postal_code
- * @var string $email_domain
+ * @property int $id
+ * @property string $name
+ * @property string $medical_school_name
+ * @property string $street_address
+ * @property string $city
+ * @property string $province
+ * @property string $postal_code
+ * @property string $email_domain
  */
 
 namespace App\Models;

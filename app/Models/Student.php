@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property \DateTime $dob
+ * @property string $gender
+ * @property int $graduation_year
+ * 
+ * @property EducationalInstitution $educational_institution
+ */
+
 class Student extends Model
 {
     use HasFactory;
