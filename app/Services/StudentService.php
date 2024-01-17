@@ -15,7 +15,18 @@ class StudentService{
         return $student;
     }
 
-    public function createStudent(CreateStudentRequest $request){
+    public function createStudent(CreateStudentRequest $request): Student
+    {
+        $student = Student::insert([
+            'name' => $request->name,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'graduation_year' => $request->graduation_year,
+            'educational_institution_id' => $request->educational_institution_id,
+            'medical_discipline' => $request->medical_discipline,
+            'prefers_research' => $request->prefers_research,
+        ]);
 
+        return $student;
     }
 }

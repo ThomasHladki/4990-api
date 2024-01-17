@@ -14,8 +14,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \DateTime $dob
  * @property string $gender
  * @property int $graduation_year
- * 
+ * @property int $educational_institution_id
  * @property EducationalInstitution $educational_institution
+ * @property string $medical_discipline
+ * @property bool $prefers_research 
  */
 
 class Student extends Model
