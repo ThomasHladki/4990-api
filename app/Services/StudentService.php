@@ -1,13 +1,12 @@
 <?php
+use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
 use App\Models\StudentGrade;
 use App\Models\StudentLocationPreference;
 
 
-class StudentService{
-
-
+class StudentService {
     public function getStudent(int $id): Student|null
     {
         /** @var Student|null $student */
@@ -18,20 +17,18 @@ class StudentService{
         return $student;
     }
 
-    public function createStudent(CreateStudentRequest $request): Student
+    public function createStudent(CreateStudentRequest $request): bool
     {
-        /** @var Student $student */
-        $student = Student::create([
-            'name' => $request->name,
-            'dob' => $request->dob,
-            'gender' => $request->gender,
-            'graduation_year' => $request->graduation_year,
-            'educational_institution_id' => $request->educational_institution_id,
-            'medical_discipline' => $request->medical_discipline,
-            'prefers_research' => $request->prefers_research,
-        ]);
-
-        return $student;
+        return Student::query()
+            ->insert([
+                'name' => $request->name,
+                'dob' => $request->dob,
+                'gender' => $request->gender,
+                'graduation_year' => $request->graduation_year,
+                'educational_institution_id' => $request->educational_institution_id,
+                'medical_discipline' => $request->medical_discipline,
+                'prefers_research' => $request->prefers_research,
+            ]);
     }
 
     public function getGrades(int $studentId): array
@@ -58,13 +55,14 @@ class StudentService{
             ->get();
     }
 
-    public function createStudentGrade(CreateStudentGradeRequest $request): StudentGrade
+    public function createStudentGrade(CreateStudentGradeRequest $request): bool
     {
-        return StudentGrade::create([
-            'student_id' => $request->student_id,
-            'course_code' => $request->course_code,
-            'grade' => $request->grade
-        ]);
+        return StudentGrade::query()
+            ->insert([
+                'student_id' => $request->student_id,
+                'course_code' => $request->course_code,
+                'grade' => $request->grade
+            ]);
     }
 
     public function deleteStudentGrade(int $studentGradeId): bool
@@ -74,7 +72,7 @@ class StudentService{
             ->delete();
     }
 
-    public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request): StudentLocationPreference
+    public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request): bool
     {
         if(StudentLocationPreference::query()->where('student_id', '=', $request->student_id)->exists()){
             StudentLocationPreference::query()
@@ -82,21 +80,23 @@ class StudentService{
             ->delete();
         }
 
-        /** @var StudentLocationPreference $preference */
+        /** @var bool $preference */
         if($request->has_preference){
-            $preference = StudentLocationPreference::create([
-                'student_id' => $request->student_id,
-                'has_preference' => true,
-                'preferred_province' => $request->preffered_province,
-                'preferred_city' => $request->preferred_city
-            ]);
+            $preference = StudentLocationPreference::query()
+                ->insert([
+                    'student_id' => $request->student_id,
+                    'has_preference' => true,
+                    'preferred_province' => $request->preffered_province,
+                    'preferred_city' => $request->preferred_city
+                ]);
         }else{
-            $preference = StudentLocationPreference::create([
-                'student_id' => $request->student_id,
-                'has_preference' => false,
-                'preferred_province' => null,
-                'preferred_city' => null
-            ]); 
+            $preference = StudentLocationPreference::query()
+                ->insert([
+                    'student_id' => $request->student_id,
+                    'has_preference' => false,
+                    'preferred_province' => null,
+                    'preferred_city' => null
+                ]); 
         }
         return $preference;
     }
@@ -106,6 +106,36 @@ class StudentService{
         return StudentLocationPreference::query()
             ->where('student_id', '=', $studentId)
             ->delete();
+    }
+
+    public function getAllApplications(int $studentId): array
+    {
+        return ResidencyPositionApplication::query()
+            ->where('student_id', '=', $studentId)
+            ->get();
+
+    }
+
+    public function getApplication(int $id): ResidencyPositionApplication|null
+    {
+        /** @var ResidencyPositionApplication|null $application */
+        $application = ResidencyPositionApplication::query()
+            ->where('id', '=', $id)
+            ->first();
+
+        return $application;
+    }
+
+
+
+    public function applyForPosition(CreateResidencyPositionApplication $request): bool
+    {
+        return ResidencyPositionApplication::query()
+            ->insert([
+                'student_id' => $request->student_id,
+                'residency_position_id' => $request->residency_position_id,
+                'message' => $request->message
+            ]);
     }
 
 }
