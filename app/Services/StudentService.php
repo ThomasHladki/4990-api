@@ -64,8 +64,48 @@ class StudentService{
             'student_id' => $request->student_id,
             'course_code' => $request->course_code,
             'grade' => $request->grade
-        ])
-            
+        ]);
+    }
+
+    public function deleteStudentGrade(int $studentGradeId): bool
+    {
+        return StudentGrade::query()
+            ->where('id', '=', $studentGradeId)
+            ->delete();
+    }
+
+    public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request): StudentLocationPreference
+    {
+        if(StudentLocationPreference::query()->where('student_id', '=', $request->student_id)->exists()){
+            StudentLocationPreference::query()
+            ->where('student_id', '=', $request->student_id)
+            ->delete();
+        }
+
+        /** @var StudentLocationPreference $preference */
+        if($request->has_preference){
+            $preference = StudentLocationPreference::create([
+                'student_id' => $request->student_id,
+                'has_preference' => true,
+                'preferred_province' => $request->preffered_province,
+                'preferred_city' => $request->preferred_city
+            ]);
+        }else{
+            $preference = StudentLocationPreference::create([
+                'student_id' => $request->student_id,
+                'has_preference' => false,
+                'preferred_province' => null,
+                'preferred_city' => null
+            ]); 
+        }
+        return $preference;
+    }
+
+    public function deleteLocationPreference(int $studentId): bool
+    {
+        return StudentLocationPreference::query()
+            ->where('student_id', '=', $studentId)
+            ->delete();
     }
 
 }
