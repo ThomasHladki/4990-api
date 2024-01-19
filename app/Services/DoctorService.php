@@ -1,5 +1,6 @@
 <?php
 use App\Models\Doctor;
+use App\Models\ResidencyPosition;
 
 class DoctorService {
 
@@ -54,4 +55,13 @@ class DoctorService {
 
         return $doctor->save();
     }
+
+    public function viewResidencyPositions(int $doctor_id): array
+    {
+        return ResidencyPosition::query()
+            ->where('doctor_id', '=', $doctor_id)
+            ->get();
+    }
+
+    
 }
