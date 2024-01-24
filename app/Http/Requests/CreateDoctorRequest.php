@@ -1,9 +1,12 @@
 <?php
+
+namespace App\Http\Requests;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property string $name
- * @property Date $dob
+ * @property \Date $dob
  * @property string $gender
  * @property int $medical_institution_id
  * @property string $medical_discipline
