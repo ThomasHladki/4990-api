@@ -10,6 +10,11 @@ class ResidencyPositionGrade extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'residency_position_id',
+        'course_code',
+    ];
+
     public function residencyPosition(): BelongsTo
     {
         return $this->belongsTo(ResidencyPosition::class);

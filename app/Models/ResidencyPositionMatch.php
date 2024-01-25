@@ -10,6 +10,12 @@ class ResidencyPositionMatch extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'student_id',
+        'residency_position_id',
+        'match_score'
+    ];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);

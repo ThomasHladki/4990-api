@@ -1,4 +1,9 @@
 <?php
+use App\Http\Requests\CreateResidencyPositionApplication;
+use App\Http\Requests\CreateStudentGradeRequest;
+use App\Http\Requests\CreateStudentLocationPreference;
+use App\Http\Requests\CreateStudentRequest;
+use App\Http\Requests\IdRequest;
 use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
@@ -7,11 +12,11 @@ use App\Models\StudentLocationPreference;
 
 
 class StudentService {
-    public function getStudent(int $id): Student|null
+    public function getStudent(IdRequest $request): Student|null
     {
         /** @var Student|null $student */
         $student = Student::query()
-            ->where("id",'=', $id)
+            ->where("id",'=', $request->id)
             ->first();
 
         return $student;
@@ -31,26 +36,26 @@ class StudentService {
             ]);
     }
 
-    public function getGrades(int $studentId): array
+    public function getGrades(IdRequest $request): array
     {
         return StudentGrade::query()
-            ->where('student_id', '=', $studentId)
+            ->where('student_id', '=', $request->id)
             ->get();
     }
 
-    public function getLocationPreference(int $studentId): StudentLocationPreference|null
+    public function getLocationPreference(IdRequest $request): StudentLocationPreference|null
     {
         /** @var StudentLocationPreference|null $preference */
         $preference = StudentLocationPreference::query()
-            ->where('student_id', '=', $studentId)
+            ->where('student_id', '=', $request->id)
             ->first();
         return $preference;
     }
 
-    public function getMatches(int $studentId): array
+    public function getMatches(IdRequest $request): array
     {
         return ResidencyPositionMatch::query()
-            ->where('student_id', '=', $studentId)
+            ->where('student_id', '=', $request->id)
             ->orderBy('match_score', 'DESC')
             ->get();
     }
@@ -65,10 +70,10 @@ class StudentService {
             ]);
     }
 
-    public function deleteStudentGrade(int $studentGradeId): bool
+    public function deleteStudentGrade(IdRequest $request): bool
     {
         return StudentGrade::query()
-            ->where('id', '=', $studentGradeId)
+            ->where('id', '=', $request->id)
             ->delete();
     }
 
@@ -101,26 +106,26 @@ class StudentService {
         return $preference;
     }
 
-    public function deleteLocationPreference(int $studentId): bool
+    public function deleteLocationPreference(IdRequest $request): bool
     {
         return StudentLocationPreference::query()
-            ->where('student_id', '=', $studentId)
+            ->where('student_id', '=', $request->id)
             ->delete();
     }
 
-    public function getAllApplications(int $studentId): array
+    public function getAllApplications(IdRequest $request): array
     {
         return ResidencyPositionApplication::query()
-            ->where('student_id', '=', $studentId)
+            ->where('student_id', '=', $request->id)
             ->get();
 
     }
 
-    public function getApplication(int $id): ResidencyPositionApplication|null
+    public function getApplication(IdRequest $request): ResidencyPositionApplication|null
     {
         /** @var ResidencyPositionApplication|null $application */
         $application = ResidencyPositionApplication::query()
-            ->where('id', '=', $id)
+            ->where('id', '=', $request->id)
             ->first();
 
         return $application;

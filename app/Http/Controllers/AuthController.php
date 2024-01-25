@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IdRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Traits\HttpResponses;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-
+use App\Models\Doctor;
+use App\Models\Student;
 
 class AuthController extends Controller
 {
@@ -56,6 +57,29 @@ class AuthController extends Controller
 
         return $this->success([
             'message' => 'You have succesfully logged out'
+        ]);
+    }
+
+    public function retrieveProfileFromUser(IdRequest $request)
+    {
+        /** @var User|null $user */
+        $user = User::query()
+            ->where('id', '=', $request->id)
+            ->first();
+
+        if($user->doctor){
+            return $this->success([
+                'doctor' => $user->doctor
+            ]);
+        }
+
+        if($user->student){
+            return $this->success([
+                'student' => $user->student
+            ]);
+        }
+        return $this->success([
+            'message' => 'No profile associated with user'
         ]);
     }
 }

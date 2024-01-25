@@ -1,14 +1,17 @@
 <?php
+use App\Http\Requests\CreateDoctorRequest;
+use App\Http\Requests\IdRequest;
+use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\ResidencyPosition;
 
 class DoctorService {
 
-    public function getDoctor(int $doctorId): Doctor|null
+    public function getDoctor(IdRequest $request): Doctor|null
     {
         /** */
         $doctor = Doctor::query()
-            ->where('id', '=', $doctorId)
+            ->where('id', '=', $request->id)
             ->first();
 
         return $doctor;
@@ -56,10 +59,10 @@ class DoctorService {
         return $doctor->save();
     }
 
-    public function viewResidencyPositions(int $doctor_id): array
+    public function viewResidencyPositions(IdRequest $request): array
     {
         return ResidencyPosition::query()
-            ->where('doctor_id', '=', $doctor_id)
+            ->where('doctor_id', '=', $request->id)
             ->get();
     }
 

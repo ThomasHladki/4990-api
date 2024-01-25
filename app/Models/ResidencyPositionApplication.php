@@ -10,6 +10,12 @@ class ResidencyPositionApplication extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'student_id',
+        'residency_position_id',
+        'message'
+    ];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);

@@ -16,6 +16,13 @@ class StudentLocationPreference extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'student_id',
+        'has_preference',
+        'preferred_province',
+        'preferred_city'
+    ];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);

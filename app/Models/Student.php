@@ -18,11 +18,24 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property EducationalInstitution $educational_institution
  * @property string $medical_discipline
  * @property bool $prefers_research 
+ * @property int $user_id
+ * @property User $user
  */
 
 class Student extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'dob',
+        'gender',
+        'graduation_year',
+        'educational_institution_id',
+        'medical_discipline',
+        'prefers_research',
+        'user_id'
+    ];
 
     public function educationalInstitution():BelongsTo
     {
@@ -47,5 +60,10 @@ class Student extends Model
     public function residencyPositionMatches(): HasMany
     {
         return $this->hasMany(ResidencyPositionMatch::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

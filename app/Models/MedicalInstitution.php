@@ -19,6 +19,16 @@ class MedicalInstitution extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'type',
+        'street_address',
+        'city',
+        'province',
+        'postal_code',
+        'email_domain'
+    ];
+
     public function doctors(): HasMany
     {
         return $this->hasMany(Doctor::class);

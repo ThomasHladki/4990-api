@@ -11,6 +11,20 @@ class ResidencyPosition extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'status',
+        'description',
+        'medical_discipline',
+        'doctor_id',
+        'medical_institution_id',
+        'grade_avg_requirement',
+        'letter_of_reccomendation_req',
+        'research_focused',
+        'prefers_new_grads',
+        
+    ];
+
     public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class);
