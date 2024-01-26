@@ -127,8 +127,6 @@ class StudentService {
         return $application;
     }
 
-
-
     public function applyForPosition(CreateResidencyPositionApplication $request): bool
     {
         return ResidencyPositionApplication::create([
@@ -137,5 +135,4 @@ class StudentService {
                 'message' => $request->message
             ]);
     }
-
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
 use App\Models\Doctor;
 use App\Models\ResidencyPosition;
+use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionGrade;
 
 class DoctorService {
@@ -153,7 +154,68 @@ class DoctorService {
         }
 
         $position->save();
-
         return $position;
     }
+
+    public function closePosition(IdRequest $request)
+    {
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->first();
+
+        if(!$position){
+            return null;
+        }
+
+        $position->status = ResidencyPosition::STATUS_CLOSED;
+        $position->save();
+        return $position;
+    }
+
+    public function openPosition(IdRequest $request)
+    {
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->first();
+
+        if(!$position){
+            return null;
+        }
+
+        $position->status = ResidencyPosition::STATUS_OPEN;
+        $position->save();
+        return $position;
+    }
+
+    public function rejectApplicant(IdRequest $request)
+    {
+        $application = ResidencyPositionApplication::query()
+            ->where('id', '=', $request->id)
+            ->first();
+
+        if(!$application){
+            return null;
+        }
+
+        $application->status = ResidencyPositionApplication::STATUS_REJECTED;
+        $application->save();
+        return $application;
+    }
+
+    public function acceptApplicant(IdRequest $request)
+    {
+        $application = ResidencyPositionApplication::query()
+            ->where('id', '=', $request->id)
+            ->first();
+
+        if(!$application){
+            return null;
+        }
+
+        $application->status = ResidencyPositionApplication::STATUS_ACCEPTED;
+        $application->save();
+        return $application;
+    }
+
+    
 }
