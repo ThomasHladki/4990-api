@@ -22,10 +22,9 @@ class StudentService {
         return $student;
     }
 
-    public function createStudent(CreateStudentRequest $request): bool
+    public function createStudent(CreateStudentRequest $request): Student
     {
-        return Student::query()
-            ->insert([
+        return Student::create([
                 'name' => $request->name,
                 'dob' => $request->dob,
                 'gender' => $request->gender,
@@ -60,10 +59,9 @@ class StudentService {
             ->get();
     }
 
-    public function createStudentGrade(CreateStudentGradeRequest $request): bool
+    public function createStudentGrade(CreateStudentGradeRequest $request): StudentGrade
     {
-        return StudentGrade::query()
-            ->insert([
+        return StudentGrade::create([
                 'student_id' => $request->student_id,
                 'course_code' => $request->course_code,
                 'grade' => $request->grade
@@ -87,16 +85,14 @@ class StudentService {
 
         /** @var bool $preference */
         if($request->has_preference){
-            $preference = StudentLocationPreference::query()
-                ->insert([
+            $preference = StudentLocationPreference::create([
                     'student_id' => $request->student_id,
                     'has_preference' => true,
                     'preferred_province' => $request->preffered_province,
                     'preferred_city' => $request->preferred_city
                 ]);
         }else{
-            $preference = StudentLocationPreference::query()
-                ->insert([
+            $preference = StudentLocationPreference::create([
                     'student_id' => $request->student_id,
                     'has_preference' => false,
                     'preferred_province' => null,
@@ -135,8 +131,7 @@ class StudentService {
 
     public function applyForPosition(CreateResidencyPositionApplication $request): bool
     {
-        return ResidencyPositionApplication::query()
-            ->insert([
+        return ResidencyPositionApplication::create([
                 'student_id' => $request->student_id,
                 'residency_position_id' => $request->residency_position_id,
                 'message' => $request->message

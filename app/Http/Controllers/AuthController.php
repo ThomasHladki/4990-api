@@ -82,6 +82,8 @@ class AuthController extends Controller
             'message' => 'No profile associated with user'
         ]);
     }
+
+
 }
 
 

@@ -10,6 +10,10 @@ class ResidencyPositionApplication extends Model
 {
     use HasFactory;
 
+    const STATUS_REJECTED = 'REJECTED';
+    const STATUS_OPEN = 'OPEN';
+    const STATUS_ACCEPTED = 'ACCEPTED';
+
     protected $fillable = [
         'student_id',
         'residency_position_id',

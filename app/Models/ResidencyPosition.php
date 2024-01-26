@@ -11,6 +11,9 @@ class ResidencyPosition extends Model
 {
     use HasFactory;
 
+    const STATUS_OPEN = 'OPEN';
+    const STATUS_CLOSED = 'CLOSED';
+
     protected $fillable = [
         'name',
         'status',
