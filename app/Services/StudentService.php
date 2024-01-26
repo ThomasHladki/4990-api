@@ -25,14 +25,14 @@ class StudentService {
     public function createStudent(CreateStudentRequest $request): Student
     {
         return Student::create([
-                'name' => $request->name,
-                'dob' => $request->dob,
-                'gender' => $request->gender,
-                'graduation_year' => $request->graduation_year,
-                'educational_institution_id' => $request->educational_institution_id,
-                'medical_discipline' => $request->medical_discipline,
-                'prefers_research' => $request->prefers_research,
-            ]);
+            'name' => $request->name,
+            'dob' => $request->dob,
+            'gender' => $request->gender,
+            'graduation_year' => $request->graduation_year,
+            'educational_institution_id' => $request->educational_institution_id,
+            'medical_discipline' => $request->medical_discipline,
+            'prefers_research' => $request->prefers_research,
+        ]);
     }
 
     public function getGrades(IdRequest $request): array
@@ -77,10 +77,9 @@ class StudentService {
 
     public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request): bool
     {
-        if(StudentLocationPreference::query()->where('student_id', '=', $request->student_id)->exists()){
-            StudentLocationPreference::query()
-            ->where('student_id', '=', $request->student_id)
-            ->delete();
+        $existingPref = StudentLocationPreference::query()->where('student_id', '=', $request->student_id);
+        if($existingPref->exists()){
+            $existingPref->delete();
         }
 
         /** @var bool $preference */

@@ -84,7 +84,7 @@ class DoctorController extends Controller
     {
         $update = $this->doctorService->updateResidencyPosition($request);
         if(!$update){
-            return $this->error('', 'Update failed', 401);
+            return $this->error('', 'Update failed', 400);
         }
 
         return $this->success($update);
