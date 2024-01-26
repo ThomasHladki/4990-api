@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Services;
+
 use App\Http\Requests\CreateResidencyPositionApplication;
 use App\Http\Requests\CreateStudentGradeRequest;
 use App\Http\Requests\CreateStudentLocationPreference;

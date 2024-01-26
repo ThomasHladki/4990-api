@@ -6,9 +6,10 @@ use App\Http\Requests\CreateResidencyPositionApplication;
 use App\Http\Requests\CreateStudentGradeRequest;
 use App\Http\Requests\CreateStudentLocationPreference;
 use App\Http\Requests\IdRequest;
+use App\Services\StudentService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
-use StudentService;
+
 
 class StudentController extends Controller
 {

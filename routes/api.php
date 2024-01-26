@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,5 +37,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/getProfile', [AuthController::class, 'retrieveProfileFromUser']);     //Once user is logged in, get their corresponding doctor or student info, or if none, prompt to create
     
-
+    //Student
+    Route::get('/student', [StudentController::class, 'getStudent']);
 });

@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Services;
+
 use App\Http\Requests\CreateDoctorRequest;
 use App\Http\Requests\CreateResidencyPositionGradeRequest;
 use App\Http\Requests\CreateResidencyPositionRequest;
