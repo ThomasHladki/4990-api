@@ -8,8 +8,8 @@ use App\Http\Requests\CreateResidencyPositionRequest;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
+use App\Services\DoctorService;
 use App\Traits\HttpResponses;
-use DoctorService;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -53,6 +53,20 @@ class DoctorController extends Controller
         ]);
     }
 
+    public function viewApplicationsForPosition(IdRequest $request)
+    {
+        return $this->success([
+            'applications' => $this->doctorService->viewApplicationsForPosition($request)
+        ]);
+    }
+
+    public function viewAllApplications(IdRequest $request)
+    {
+        return $this->success([
+            'applications' => $this->doctorService->viewAllApplications($request)
+        ]);
+    }
+
     public function createResidencyPosition(CreateResidencyPositionRequest $request)
     {
         return $this->success([
@@ -88,5 +102,52 @@ class DoctorController extends Controller
         }
 
         return $this->success($update);
+    }
+
+    public function closePosition(IdRequest $request)
+    {
+        $position = $this->doctorService->closePosition($request);
+        if(!$position){
+            return $this->error('', 'No position found', 404);
+        }
+
+        return $this->success([
+            'position' => $position,
+        ], 'Status closed');
+    }
+
+    public function openPosition(IdRequest $request){
+        $position = $this->doctorService->openPosition($request);
+        if(!$position){
+            return $this->error('', 'No position found', 404);
+        }
+
+        return $this->success([
+            'position' => $position,
+        ], 'Status opened');
+    }
+
+    public function rejectApplicant(IdRequest $request)
+    {
+        $application = $this->doctorService->rejectApplicant($request);
+        if(!$application){
+            return $this->error('', 'No application found', 404);
+        }
+
+        return $this->success([
+            'position' => $application,
+        ], 'Applicant rejected');
+    }
+
+    public function acceptApplicant(IdRequest $request)
+    {
+        $application = $this->doctorService->acceptApplicant($request);
+        if(!$application){
+            return $this->error('', 'No application found', 404);
+        }
+
+        return $this->success([
+            'position' => $application,
+        ], 'Applicant accepted');
     }
 }

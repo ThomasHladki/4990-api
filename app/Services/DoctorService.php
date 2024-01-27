@@ -73,6 +73,23 @@ class DoctorService {
             ->get();
     }
 
+    public function viewApplicationsForPosition(IdRequest $request)
+    {
+        //$request->id for position id in this case
+        return ResidencyPositionApplication::query()
+            ->where('residency_position_id', '=', $request->id)
+            ->get();
+    }
+
+    public function viewAllApplications(IdRequest $request)
+    {
+        //$request->id for doctor id in this case
+        return ResidencyPositionApplication::query()
+            ->whereHas('residencyPosition', function($query) use ($request){
+                $query->where('doctor_id', '=', $request->id);
+            });
+    }
+
     public function createResidencyPosition(CreateResidencyPositionRequest $request)
     {
         $position = ResidencyPosition::create([

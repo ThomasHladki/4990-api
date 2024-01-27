@@ -42,4 +42,9 @@ class ResidencyPosition extends Model
     {
         return $this->hasMany(ResidencyPositionMatch::class);
     }
+
+    public function residencyPositionApplications(): HasMany
+    {
+        return $this->hasMany(ResidencyPositionApplication::class);
+    }
 }

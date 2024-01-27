@@ -24,4 +24,9 @@ class ResidencyPositionApplication extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function residencyPosition(): BelongsTo
+    {
+        return $this->belongsTo(ResidencyPosition::class);
+    }
 }
