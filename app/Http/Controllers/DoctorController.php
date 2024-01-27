@@ -8,6 +8,7 @@ use App\Http\Requests\CreateResidencyPositionRequest;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
+use App\Models\ResidencyPosition;
 use App\Services\DoctorService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -62,6 +63,10 @@ class DoctorController extends Controller
 
     public function viewAllApplications(IdRequest $request)
     {
+        if($request->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'applications' => $this->doctorService->viewAllApplications($request)
         ]);
@@ -69,6 +74,10 @@ class DoctorController extends Controller
 
     public function createResidencyPosition(CreateResidencyPositionRequest $request)
     {
+        if($request->doctor_id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'position' => $this->doctorService->createResidencyPosition($request)
         ]);
@@ -76,6 +85,15 @@ class DoctorController extends Controller
 
     public function viewPositionGrades(IdRequest $request)
     {
+        /** @var ResidencyPosition $position */
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+
+        if($position->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'position_grades' => $this->doctorService->viewPositionGrades($request)
         ]);
@@ -83,6 +101,15 @@ class DoctorController extends Controller
 
     public function createResidencyPositionGrade(CreateResidencyPositionGradeRequest $request)
     {
+         /** @var ResidencyPosition $position */
+         $position = ResidencyPosition::query()
+         ->where('id', '=', $request->residency_position_id)
+         ->firstOrFail();
+
+        if($position->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'position_grade' => $this->doctorService->createResidencyPositionGrade($request)
         ]);
