@@ -9,6 +9,7 @@ use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
 use App\Models\ResidencyPosition;
+use App\Models\ResidencyPositionGrade;
 use App\Services\DoctorService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -40,6 +41,11 @@ class DoctorController extends Controller
     }
 
     public function updateDoctor(UpdateDoctorRequest $request){
+
+        if($request->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         $status = $this->doctorService->updateDoctor($request);
         if($status){
             return $this->success('Updated');
@@ -49,6 +55,10 @@ class DoctorController extends Controller
     }
 
     public function viewResidencyPositions(IdRequest $request){
+        if($request->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'positions' => $this->doctorService->viewResidencyPositions($request)
         ]);
@@ -56,6 +66,14 @@ class DoctorController extends Controller
 
     public function viewApplicationsForPosition(IdRequest $request)
     {
+        /** @var ResidencyPosition $position */
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+
+        if($position->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'applications' => $this->doctorService->viewApplicationsForPosition($request)
         ]);
@@ -117,6 +135,15 @@ class DoctorController extends Controller
 
     public function deletePositionGrade(IdRequest $request)
     {
+        /** @var ResidencyPositionGrade $grade */
+        $grade = ResidencyPositionGrade::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+        
+        if($grade->residencyPosition->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         $this->doctorService->deletePositionGrade($request);
         return $this->success('deleted');
     }
