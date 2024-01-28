@@ -9,6 +9,7 @@ use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
 use App\Models\ResidencyPosition;
+use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionGrade;
 use App\Services\DoctorService;
 use App\Traits\HttpResponses;
@@ -150,6 +151,15 @@ class DoctorController extends Controller
 
     public function updateResidencyPosition(UpdateResidencyPositionRequest $request)
     {
+        /** @var ResidencyPosition $position */
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+
+        if($position->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         $update = $this->doctorService->updateResidencyPosition($request);
         if(!$update){
             return $this->error('', 'Update failed', 400);
@@ -160,6 +170,15 @@ class DoctorController extends Controller
 
     public function closePosition(IdRequest $request)
     {
+        /** @var ResidencyPosition $position */
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+            
+        if($position->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         $position = $this->doctorService->closePosition($request);
         if(!$position){
             return $this->error('', 'No position found', 404);
@@ -171,6 +190,15 @@ class DoctorController extends Controller
     }
 
     public function openPosition(IdRequest $request){
+        /** @var ResidencyPosition $position */
+        $position = ResidencyPosition::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+            
+        if($position->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         $position = $this->doctorService->openPosition($request);
         if(!$position){
             return $this->error('', 'No position found', 404);
@@ -183,6 +211,15 @@ class DoctorController extends Controller
 
     public function rejectApplicant(IdRequest $request)
     {
+        /** @var ResidencyPositionApplication $application */
+        $application = ResidencyPositionApplication::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+
+        if($application->residencyPosition->doctor->id !== auth()->user()->doctor?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         $application = $this->doctorService->rejectApplicant($request);
         if(!$application){
             return $this->error('', 'No application found', 404);
