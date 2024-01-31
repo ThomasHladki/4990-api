@@ -62,10 +62,10 @@ class AuthController extends Controller
 
     public function retrieveProfileFromUser(IdRequest $request)
     {
-        /** @var User|null $user */
+        /** @var User $user */
         $user = User::query()
             ->where('id', '=', $request->id)
-            ->first();
+            ->firstOrFail();
 
         if($user->doctor){
             return $this->success([
