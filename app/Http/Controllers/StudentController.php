@@ -20,7 +20,7 @@ class StudentController extends Controller
     private StudentService $studentService;
 
     public function __construct(StudentService $studentService){
-        $this->StudentService = $studentService;
+        $this->studentService = $studentService;
     }
 
 
