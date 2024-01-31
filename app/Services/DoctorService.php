@@ -9,6 +9,7 @@ use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
 use App\Models\Doctor;
+use App\Models\MedicalInstitution;
 use App\Models\ResidencyPosition;
 use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionGrade;
@@ -35,6 +36,11 @@ class DoctorService {
                 'medical_discipline' => $request->medical_discipline,
                 'user_id' =>$request->user_id
             ]);
+    }
+
+    public function getMedicalInstitutions(){
+        return MedicalInstitution::query()
+            ->get();
     }
 
     public function updateDoctor(UpdateDoctorRequest $request): bool

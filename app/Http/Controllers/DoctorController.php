@@ -41,6 +41,12 @@ class DoctorController extends Controller
         return $this->error('Could not create', 'Request failed', 400);
     }
 
+    public function getMedicalInstitutions(){
+        return $this->success([
+            'institutions' => $this->doctorService->getMedicalInstitutions()
+        ]);
+    }
+
     public function updateDoctor(UpdateDoctorRequest $request){
 
         if($request->id !== auth()->user()->doctor?->id){

@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     //Doctors
     Route::get('/doctor', [DoctorController::class, 'getDoctor']);
     Route::post('/doctor/create', [DoctorController::class, 'createDoctor']);
+    Route::get('/medical_institutions', [DoctorController::class, 'getMedicalInstitutions']);
     Route::patch('/doctor/update', [DoctorController::class, 'updateDoctor']);
     Route::get('/doctor/positions/all', [DoctorController::class, 'viewResidencyPositions']);
     Route::get('/doctor/position/applications', [DoctorController::class, 'viewApplicationsForPosition']);
