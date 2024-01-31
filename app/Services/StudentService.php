@@ -8,6 +8,7 @@ use App\Http\Requests\CreateStudentLocationPreference;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\EducationalInstitution;
 use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
@@ -38,6 +39,11 @@ class StudentService {
             'prefers_research' => $request->prefers_research,
             'user_id' =>$request->user_id
         ]);
+    }
+
+    public function getEducationalInstitutions(){
+        return EducationalInstitution::query()
+            ->get();
     }
 
     public function updateStudent(UpdateStudentRequest $request){

@@ -36,6 +36,12 @@ class StudentController extends Controller
         ]);
     }
 
+    public function getEducationalInstitutions(){
+        return $this->success([
+            'institutions' => $this->studentService
+        ]);
+    }
+
     public function createStudent(CreateStudentRequest $request){
         return $this->success([
             'student' => $this->studentService->createStudent($request)
