@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @property int $id
- * @property string $name
- * @property \DateTime $dob
- * @property string $gender
- * @property int $graduation_year
- * @property int $educational_institution_id
- * @property string $medical_discipline
- * @property bool $prefers_research 
+ * @property int|null $id
+ * @property string|null $name
+ * @property \DateTime|null $dob
+ * @property string|null $gender
+ * @property int|null $graduation_year
+ * @property int|null $educational_institution_id
+ * @property string|null $medical_discipline
+ * @property bool|null $prefers_research 
  */
 
  class UpdateStudentRequest extends FormRequest{

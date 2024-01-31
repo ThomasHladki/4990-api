@@ -36,6 +36,7 @@ class StudentService {
             'educational_institution_id' => $request->educational_institution_id,
             'medical_discipline' => $request->medical_discipline,
             'prefers_research' => $request->prefers_research,
+            'user_id' =>$request->user_id
         ]);
     }
 

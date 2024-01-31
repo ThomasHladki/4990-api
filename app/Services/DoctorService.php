@@ -33,6 +33,7 @@ class DoctorService {
                 'gender' => $request->gender,
                 'medical_institution_id' => $request->medical_institution_id,
                 'medical_discipline' => $request->medical_discipline,
+                'user_id' =>$request->user_id
             ]);
     }
 

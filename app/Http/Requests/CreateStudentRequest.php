@@ -13,6 +13,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property int $educational_institution_id
  * @property string $medical_discipline
  * @property bool $prefers_research 
+ * @property int $user_id
  */
 
 class CreateStudentRequest extends FormRequest{
@@ -33,6 +34,7 @@ class CreateStudentRequest extends FormRequest{
             'educational_institution_id' => ['required'],
             'medical_discipline' => ['required'],
             'prefers_research' => ['required'],
+            'user_id' => ['required']
         ];
     }
 }
