@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateResidencyPositionApplication;
 use App\Http\Requests\CreateStudentGradeRequest;
 use App\Http\Requests\CreateStudentLocationPreference;
+use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\IdRequest;
 use App\Services\StudentService;
 use App\Traits\HttpResponses;
@@ -34,16 +35,22 @@ class StudentController extends Controller
         ]);
     }
 
+    public function createStudent(CreateStudentRequest $request){
+        return $this->success([
+            'student' => $this->studentService->createStudent($request)
+        ]);
+    }
+
     public function getGrades(IdRequest $request)
     {
-        $this->success([
+        return $this->success([
             'grades' => $this->studentService->getGrades($request)
         ]);
     }
 
     public function getMatches(IdRequest $request)
     {
-        $this->success([
+        return $this->success([
             'matches' => $this->studentService->getMatches($request)
         ]);
     }
@@ -65,7 +72,7 @@ class StudentController extends Controller
 
     public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request)
     {
-        $this->success([
+        return $this->success([
             'preference' => $this->createOrUpdateLocationPreference($request)
         ]);
     }
