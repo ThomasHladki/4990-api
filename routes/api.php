@@ -35,7 +35,7 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/getProfile', [AuthController::class, 'retrieveProfileFromUser']);     //Once user is logged in, get their corresponding doctor or student info, or if none, prompt to create
+    Route::get('/getProfile', [AuthController::class, 'retrieveProfileFromUser']);     //Once user is logged in, get their corresponding doctor or student info, or if none, prompt to create
     
     //Students
     Route::get('/student', [StudentController::class, 'getStudent']);
