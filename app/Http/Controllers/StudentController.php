@@ -7,6 +7,7 @@ use App\Http\Requests\CreateStudentGradeRequest;
 use App\Http\Requests\CreateStudentLocationPreference;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\IdRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Services\StudentService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -38,6 +39,12 @@ class StudentController extends Controller
     public function createStudent(CreateStudentRequest $request){
         return $this->success([
             'student' => $this->studentService->createStudent($request)
+        ]);
+    }
+
+    public function updateStudent(UpdateStudentRequest $request){
+        return $this->success([
+            'student' => $this->studentService->updateStudent($request)
         ]);
     }
 

@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     //Students
     Route::get('/student', [StudentController::class, 'getStudent']);
     Route::post('/student/create', [StudentController::class, 'createStudent']);
+    Route::patch('/student/update', [StudentController::class, 'updateStudent']);
     Route::get('/student/grades', [StudentController::class, 'getGrades']);
     Route::get('/student/matches', [StudentController::class, 'getMatches']);
     Route::post('/student/grade/create', [StudentController::class, 'createStudentGrade']);

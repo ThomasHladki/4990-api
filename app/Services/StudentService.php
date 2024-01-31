@@ -7,6 +7,7 @@ use App\Http\Requests\CreateStudentGradeRequest;
 use App\Http\Requests\CreateStudentLocationPreference;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\IdRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
@@ -37,6 +38,44 @@ class StudentService {
             'prefers_research' => $request->prefers_research,
         ]);
     }
+
+    public function updateStudent(UpdateStudentRequest $request){
+        /** @var Student $student */
+        $student = Student::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+
+        if($request->name){
+            $student->name = $request->name;
+        }
+
+        if($request->dob){
+            $student->dob = $request->dob;
+        }
+
+        if($request->gender){
+            $student->gender = $request->gender;
+        }
+
+        if($request->graduation_year){
+            $student->graduation_year = $request->graduation_year;
+        }
+
+        if($request->educational_institution_id){
+            $student->educational_institution_id = $request->educational_institution_id;
+        }
+
+        if($request->medical_discipline){
+            $student->medical_discipline = $request->medical_discipline;
+        }
+
+        if($request->prefers_research){
+            $student->prefers_research = $request->prefers_research;
+        }
+
+        $student->save();
+        return $student;
+    }   
 
     public function getGrades(IdRequest $request): array
     {
