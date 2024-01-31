@@ -25,7 +25,7 @@ class DoctorService {
         return $doctor;
     }
 
-    public function createDoctor(CreateDoctorRequest $request): bool
+    public function createDoctor(CreateDoctorRequest $request): Doctor
     {
         return Doctor::create([
                 'name' => $request->name,
