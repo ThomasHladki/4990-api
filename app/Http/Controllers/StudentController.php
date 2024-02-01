@@ -26,8 +26,10 @@ class StudentController extends Controller
 
     public function getStudent(IdRequest $request)
     {
+        if($request->id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         $student = $this->studentService->getStudent($request);
-
         if(!$student){
             return $this->error('', 'No student found', 404);
         }
@@ -49,6 +51,9 @@ class StudentController extends Controller
     }
 
     public function updateStudent(UpdateStudentRequest $request){
+        if($request->id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'student' => $this->studentService->updateStudent($request)
         ]);
@@ -56,6 +61,9 @@ class StudentController extends Controller
 
     public function getGrades(IdRequest $request)
     {
+        if($request->id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'grades' => $this->studentService->getGrades($request)
         ]);
@@ -63,6 +71,9 @@ class StudentController extends Controller
 
     public function getMatches(IdRequest $request)
     {
+        if($request->id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'matches' => $this->studentService->getMatches($request)
         ]);
@@ -70,6 +81,9 @@ class StudentController extends Controller
 
     public function createStudentGrade(CreateStudentGradeRequest $request)
     {
+        if($request->student_id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'grade' => $this->studentService->createStudentGrade($request)
         ]);
