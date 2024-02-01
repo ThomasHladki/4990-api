@@ -8,6 +8,8 @@ use App\Http\Requests\CreateStudentLocationPreference;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use App\Models\StudentGrade;
+use App\Models\StudentLocationPreference;
 use App\Services\StudentService;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -91,6 +93,12 @@ class StudentController extends Controller
 
     public function deleteStudentGrade(IdRequest $request)
     {
+        $grade = StudentGrade::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+        if($grade->student_id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success(
             $this->studentService->deleteStudentGrade($request),
             'Deleted'
@@ -99,6 +107,9 @@ class StudentController extends Controller
 
     public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request)
     {
+        if($request->student_id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'preference' => $this->createOrUpdateLocationPreference($request)
         ]);
@@ -106,6 +117,14 @@ class StudentController extends Controller
 
     public function deleteLocationPreference(IdRequest $request)
     {
+        $preference = StudentLocationPreference::query()
+            ->where('id', '=', $request->id)
+            ->firstOrFail();
+
+        if($preference->student_id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             $this->studentService->deleteLocationPreference($request),
             'Deleted'
@@ -114,6 +133,9 @@ class StudentController extends Controller
 
     public function getAllApplications(IdRequest $request)
     {
+        if($request->id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
         return $this->success([
             'applications' => $this->studentService->getAllApplications($request)
         ]);
@@ -126,6 +148,10 @@ class StudentController extends Controller
             return $this->error('', 'No student found', 404);
         }
 
+        if($application->student_id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'application' => $application
         ]);
@@ -133,6 +159,10 @@ class StudentController extends Controller
 
     public function applyForPosition(CreateResidencyPositionApplication $request)
     {
+        if($request->student_id !== auth()->user()->student?->id){
+            return $this->error('', 'Unauthorized', 403);
+        }
+
         return $this->success([
             'application' => $this->studentService->applyForPosition($request)
         ]);
