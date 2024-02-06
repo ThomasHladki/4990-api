@@ -71,13 +71,18 @@ class StudentController extends Controller
         ]);
     }
 
-    public function getMatches(IdRequest $request)
+    public function getMatches()
     {
-        if($request->id !== auth()->user()->student?->id){
+        $studentId = auth()->user()->student->id; // Get the authenticated student's ID directly
+
+        if (!$studentId) {
             return $this->error('', 'Unauthorized', 403);
         }
+
+        $matches = $this->studentService->getMatches($studentId); // Adjust your service method if needed
+
         return $this->success([
-            'matches' => $this->studentService->getMatches($request)
+            'matches' => $matches
         ]);
     }
 
