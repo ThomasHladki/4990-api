@@ -47,6 +47,10 @@ class DoctorController extends Controller
         ]);
     }
 
+    public function createMedicalInstitution(){
+        
+    }
+
     public function updateDoctor(UpdateDoctorRequest $request){
 
         if($request->id !== auth()->user()->doctor?->id){
