@@ -100,12 +100,13 @@ class StudentService {
         return $preference;
     }
 
-    public function getMatches(IdRequest $request): array
+    public function getMatches($studentId): array
     {
         return ResidencyPositionMatch::query()
-            ->where('student_id', '=', $request->id)
+            ->where('student_id', '=', $studentId)
             ->orderBy('match_score', 'DESC')
-            ->get();
+            ->get()
+            ->toArray(); // Convert the collection to an array
     }
 
     public function createStudentGrade(CreateStudentGradeRequest $request): StudentGrade

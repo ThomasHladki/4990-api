@@ -60,29 +60,18 @@ class AuthController extends Controller
         ]);
     }
 
-    public function retrieveProfileFromUser(IdRequest $request)
-    {
-        /** @var User $user */
-        $user = User::query()
-            ->where('id', '=', $request->id)
-            ->firstOrFail();
+    public function retrieveProfileFromUser()
+{
+    $user = Auth::user(); // Get the authenticated user based on the token
 
-        if($user->doctor){
-            return $this->success([
-                'doctor' => $user->doctor
-            ]);
-        }
-
-        if($user->student){
-            return $this->success([
-                'student' => $user->student
-            ]);
-        }
-        return $this->success([
-            'message' => 'No profile associated with user'
-        ]);
+    if ($user->doctor()->exists()) {
+        return $this->success(['doctor' => $user->doctor]);
+    } elseif ($user->student()->exists()) {
+        return $this->success(['student' => $user->student]);
     }
 
+    return $this->success(['message' => 'No profile associated with user']);
+}
 
 }
 
