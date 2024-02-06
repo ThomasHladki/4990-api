@@ -8,10 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @property int $id
  * @property string $name
  * @property string $status
  * @property string $medical_discipline
+ * @property string $description
  * @property Doctor $doctor
+ * @property int $doctor_id
+ * @property MedicalInstitution $medicalInstitution
+ * @property int $medical_institution_id
+ * @property float $grade_avg_requirement
+ * @property bool $letter_of_reccomendation_req
+ * @property bool $research_focused
+ * @property bool $prefers_new_grads
  */
 
 class ResidencyPosition extends Model
@@ -32,7 +41,6 @@ class ResidencyPosition extends Model
         'letter_of_reccomendation_req',
         'research_focused',
         'prefers_new_grads',
-        
     ];
 
     public function doctor(): BelongsTo
@@ -40,7 +48,7 @@ class ResidencyPosition extends Model
         return $this->belongsTo(Doctor::class);
     }
 
-    public function residencyPositionGrade(): HasMany
+    public function residencyPositionGrades(): HasMany
     {
         return $this->hasMany(ResidencyPositionGrade::class);
     }
@@ -53,5 +61,10 @@ class ResidencyPosition extends Model
     public function residencyPositionApplications(): HasMany
     {
         return $this->hasMany(ResidencyPositionApplication::class);
+    }
+
+    public function medicalInstitution(): BelongsTo
+    {
+        return $this->belongsTo(MedicalInstitution::class);
     }
 }

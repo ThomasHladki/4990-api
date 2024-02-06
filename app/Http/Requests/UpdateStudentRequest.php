@@ -13,6 +13,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property int|null $educational_institution_id
  * @property string|null $medical_discipline
  * @property bool|null $prefers_research 
+ * @property bool|null $has_letter_of_req
  */
 
  class UpdateStudentRequest extends FormRequest{
@@ -34,6 +35,7 @@ use Illuminate\Foundation\Http\FormRequest;
             'educational_institution_id' => ['sometimes'],
             'medical_discipline' => ['sometimes'],
             'prefers_research' => ['sometimes'],
+            'has_letter_of_req' => ['sometimes'],
         ];
     }
 }

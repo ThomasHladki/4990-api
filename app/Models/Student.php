@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool $prefers_research 
  * @property int $user_id
  * @property User $user
+ * @property bool|null $has_letter_of_req
  */
 
 class Student extends Model
@@ -34,7 +35,8 @@ class Student extends Model
         'educational_institution_id',
         'medical_discipline',
         'prefers_research',
-        'user_id'
+        'user_id',
+        'has_letter_of_req'
     ];
 
     public function educationalInstitution():BelongsTo

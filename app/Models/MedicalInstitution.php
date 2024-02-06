@@ -1,12 +1,13 @@
 <?php
 
 /**
- * @var string $name
- * @var string $type
- * @var string $street_address
- * @var string $city 
- * @var string $postal_code
- * @var string $email_domain
+ * @property string $name
+ * @property string $type
+ * @property string $street_address
+ * @property string $city 
+ * @property string $province
+ * @property string $postal_code
+ * @property string $email_domain
  */
 
 namespace App\Models;
@@ -32,5 +33,10 @@ class MedicalInstitution extends Model
     public function doctors(): HasMany
     {
         return $this->hasMany(Doctor::class);
+    }
+
+    public function residencyPositions(): HasMany
+    {
+        return $this->hasMany(ResidencyPosition::class);
     }
 }
