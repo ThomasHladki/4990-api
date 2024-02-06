@@ -17,6 +17,13 @@ use App\Models\StudentLocationPreference;
 
 
 class StudentService {
+
+    private MatchingService $matchingService;
+
+    public function __construct(MatchingService $matchingService)
+    {
+        $this->matchingService = $matchingService;
+    }
     public function getStudent(IdRequest $request): Student|null
     {
         /** @var Student|null $student */
@@ -29,7 +36,7 @@ class StudentService {
 
     public function createStudent(CreateStudentRequest $request): Student
     {
-        return Student::create([
+        $student = Student::create([
             'name' => $request->name,
             'dob' => $request->dob,
             'gender' => $request->gender,
@@ -40,6 +47,10 @@ class StudentService {
             'user_id' => $request->user_id,
             'has_letter_of_req' => $request->has_letter_of_req
         ]);
+
+        $this->matchingService->matchOnStudentUpdate($student->id);
+
+        return $student;
     }
 
     public function getEducationalInstitutions(){
@@ -88,6 +99,8 @@ class StudentService {
         }
 
         $student->save();
+
+        $this->matchingService->matchOnStudentUpdate($student->id);
         return $student;
     }   
 
@@ -122,18 +135,27 @@ class StudentService {
 
     public function createStudentGrade(CreateStudentGradeRequest $request): StudentGrade
     {
-        return StudentGrade::create([
+        $grade = StudentGrade::create([
                 'student_id' => $request->student_id,
                 'course_code' => $request->course_code,
                 'grade' => $request->grade
             ]);
+
+        $this->matchingService->matchOnStudentUpdate($request->student_id);
+        return $grade;
     }
 
-    public function deleteStudentGrade(IdRequest $request): bool
+    public function deleteStudentGrade(IdRequest $request)
     {
-        return StudentGrade::query()
-            ->where('id', '=', $request->id)
-            ->delete();
+        $query = StudentGrade::query()
+            ->where('id', '=', $request->id);
+
+        /** @var StudentGrade $grade */
+        $grade = $query->first();
+
+        $this->matchingService->matchOnStudentUpdate($grade->student_id);
+
+        return $query->delete();
     }
 
     public function createOrUpdateLocationPreference(CreateStudentLocationPreference $request): bool
@@ -159,14 +181,19 @@ class StudentService {
                     'preferred_city' => null
                 ]); 
         }
+
+        $this->matchingService->matchOnStudentUpdate($request->student_id);
         return $preference;
     }
 
-    public function deleteLocationPreference(IdRequest $request): bool
+    public function deleteLocationPreference(IdRequest $request)
     {
-        return StudentLocationPreference::query()
+        $delete = StudentLocationPreference::query()
             ->where('student_id', '=', $request->id)
             ->delete();
+
+        $this->matchingService->matchOnStudentUpdate($request->id);
+        return $delete;
     }
 
     public function getAllApplications(IdRequest $request): array

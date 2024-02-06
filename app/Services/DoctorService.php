@@ -16,6 +16,13 @@ use App\Models\ResidencyPositionGrade;
 
 class DoctorService {
 
+    private MatchingService $matchingService;
+
+    public function __construct(MatchingService $matchingService)
+    {
+        $this->matchingService = $matchingService;
+    }
+
     public function getDoctor(IdRequest $request): Doctor|null
     {
         /** @var Doctor|null $doctor */
@@ -111,7 +118,7 @@ class DoctorService {
                 'research_focused' => $request->research_focused, 
                 'prefers_new_grads' => $request->prefers_new_grads, 
             ]);
-
+        $this->matchingService->matchOnPositionUpdate($position->id);
         return $position;
     }
 
@@ -124,17 +131,25 @@ class DoctorService {
 
     public function createResidencyPositionGrade(CreateResidencyPositionGradeRequest $request)
     {
-        return ResidencyPositionGrade::create([
+        $grade = ResidencyPositionGrade::create([
             'residency_position_id' => $request->residency_position_id,
             'course_code' => $request->course_code,
         ]);
+
+        $this->matchingService->matchOnPositionUpdate($request->residency_position_id);
+        return $grade;
     }
 
     public function deletePositionGrade(IdRequest $request)
     {
-        return ResidencyPositionGrade::query()
-            ->where('id', '=', $request->id)
-            ->delete();
+        $query = ResidencyPositionGrade::query()
+            ->where('id', '=', $request->id);
+
+        /** @var ResidencyPositionGrade $grade */
+        $grade = $query->first();
+        $this->matchingService->matchOnPositionUpdate($grade->residency_position_id);
+        
+        return $query->delete();
     }
 
     public function updateResidencyPosition(UpdateResidencyPositionRequest $request)
@@ -181,6 +196,7 @@ class DoctorService {
         }
 
         $position->save();
+        $this->matchingService->matchOnPositionUpdate($position->id);
         return $position;
     }
 
