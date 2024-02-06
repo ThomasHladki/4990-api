@@ -14,6 +14,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string $medical_discipline
  * @property bool $prefers_research 
  * @property int $user_id
+ * @property bool|null $has_letter_of_req
  */
 
 class CreateStudentRequest extends FormRequest{
@@ -34,7 +35,9 @@ class CreateStudentRequest extends FormRequest{
             'educational_institution_id' => ['required'],
             'medical_discipline' => ['required'],
             'prefers_research' => ['required'],
-            'user_id' => ['required']
+            'user_id' => ['required'],
+            'has_letter_of_req' => ['sometimes']
+
         ];
     }
 }

@@ -37,7 +37,8 @@ class StudentService {
             'educational_institution_id' => $request->educational_institution_id,
             'medical_discipline' => $request->medical_discipline,
             'prefers_research' => $request->prefers_research,
-            'user_id' =>$request->user_id
+            'user_id' => $request->user_id,
+            'has_letter_of_req' => $request->has_letter_of_req
         ]);
     }
 
@@ -78,6 +79,12 @@ class StudentService {
 
         if($request->prefers_research){
             $student->prefers_research = $request->prefers_research;
+        }
+
+        if($request->has_letter_of_req){
+            $student->has_letter_of_req = true;
+        }else{
+            $student->has_letter_of_req = false;
         }
 
         $student->save();
