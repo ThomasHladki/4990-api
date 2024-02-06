@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\ResidencyPosition;
 use App\Models\ResidencyPositionGrade;
+use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
 use App\Models\StudentGrade;
 use App\Models\StudentLocationPreference;
@@ -14,7 +15,7 @@ class MatchingService{
 
 
 
-    public function assignMatchScore(int $student_id, int $position_id): int
+    private function assignMatchScore(int $student_id, int $position_id): int
     {
         /** @var Student $student */
         $student = Student::query()
@@ -44,6 +45,10 @@ class MatchingService{
         }
 
         if($gradeAverage < $position->grade_avg_requirement){
+            return -1;
+        }
+
+        if($position->letter_of_reccomendation_req && !$student->has_letter_of_req){
             return -1;
         }
 
@@ -87,5 +92,62 @@ class MatchingService{
         if(strtolower($position->medical_discipline) !== strtolower($student->medical_discipline)){
             return -1;
         }
+
+        return $score;
+    }
+
+    public function matchOnStudentUpdate(int $student_id){
+        ResidencyPositionMatch::query()
+            ->where('student_id', '=', $student_id)
+            ->delete();
+
+        $query = ResidencyPosition::query()
+            ->where('status', '=', ResidencyPosition::STATUS_OPEN);
+
+        $cursorPaginator = $query->cursorPaginate(100);
+        
+        do{
+            foreach($cursorPaginator->items() as $position){
+                /** @var ResidencyPosition $position */
+                $this->createMatch($student_id, $position->id);
+            }
+
+            $cursorPaginator = $query->cursorPaginate(perPage: 100, cursor: $cursorPaginator->nextCursor());
+        }while($cursorPaginator->hasPages());
+
+        return;
+    }
+
+    public function matchOnPositionUpdate(int $position_id){
+        ResidencyPositionMatch::query()
+            ->where('position_id', '=', $position_id)
+            ->delete();
+
+        $query = Student::query();
+
+        $cursorPaginator = $query->cursorPaginate(100);
+        
+        do{
+            foreach($cursorPaginator->items() as $student){
+                /** @var Student $student */
+                $this->createMatch($student->id, $position_id);
+            }
+
+            $cursorPaginator = $query->cursorPaginate(perPage: 100, cursor: $cursorPaginator->nextCursor());
+        }while($cursorPaginator->hasPages());
+
+        return;
+    }
+
+    private function createMatch(int $student_id, int $position_id){
+        $score = $this->assignMatchScore($student_id, $position_id);
+        if($score !== -1){
+            ResidencyPositionMatch::create([
+                'student_id' => $student_id,
+                'residency_position_id' => $position_id,
+                'match_score' => $score
+                ]);
+        }
+        return;
     }
 }
