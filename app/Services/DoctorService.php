@@ -3,12 +3,14 @@
 namespace App\Services;
 
 use App\Http\Requests\CreateDoctorRequest;
+use App\Http\Requests\CreateEducationalInstitutionRequest;
 use App\Http\Requests\CreateResidencyPositionGradeRequest;
 use App\Http\Requests\CreateResidencyPositionRequest;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Requests\UpdateResidencyPositionRequest;
 use App\Models\Doctor;
+use App\Models\EducationalInstitution;
 use App\Models\MedicalInstitution;
 use App\Models\ResidencyPosition;
 use App\Models\ResidencyPositionApplication;
@@ -48,6 +50,18 @@ class DoctorService {
     public function getMedicalInstitutions(){
         return MedicalInstitution::query()
             ->get();
+    }
+
+    public function createMedicalInstitution(CreateEducationalInstitutionRequest $request){
+        return EducationalInstitution::create([
+            'name' => $request->name,
+            'medical_school_name' => $request->medical_school_name,
+            'street_address' => $request->street_address,
+            'city' => $request->city,
+            'province' => $request->province,
+            'postal_code' => $request->postal_code,
+            'email_domain' => $request->email_domain
+        ]);
     }
 
     public function updateDoctor(UpdateDoctorRequest $request): bool

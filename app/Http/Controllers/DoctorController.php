@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateDoctorRequest;
+use App\Http\Requests\CreateEducationalInstitutionRequest;
 use App\Http\Requests\CreateResidencyPositionGradeRequest;
 use App\Http\Requests\CreateResidencyPositionRequest;
 use App\Http\Requests\IdRequest;
@@ -47,8 +48,10 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function createMedicalInstitution(){
-        
+    public function createMedicalInstitution(CreateEducationalInstitutionRequest $request){
+        return $this->success([
+            'insitution' => $this->doctorService->createMedicalInstitution($request)
+        ]);
     }
 
     public function updateDoctor(UpdateDoctorRequest $request){

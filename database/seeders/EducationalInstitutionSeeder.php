@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\EducationalInstitution;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EducationalInstitutionSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class EducationalInstitutionSeeder extends Seeder
      */
     public function run(): void
     {
-        EducationalInstitution::create([
+        DB::table('educational_institutions')->insert([
             'name' => 'University of Windsor',
             'medical_school_name' => 'Schulich School of Medicine & Dentistry',
             'street_address' => '123 University Avenue',
