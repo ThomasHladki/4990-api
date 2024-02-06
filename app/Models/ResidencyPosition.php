@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name
  * @property string $status
  * @property string $medical_discipline
+ * @property string $description
  * @property Doctor $doctor
  * @property int $doctor_id
  * @property MedicalInstitution $medicalInstitution

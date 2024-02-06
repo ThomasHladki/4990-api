@@ -111,6 +111,11 @@ class StudentService {
     {
         return ResidencyPositionMatch::query()
             ->where('student_id', '=', $request->id)
+            ->whereDoesntHave('student', function($query) use ($request){
+                $query->whereHas('residencyPositionApplications', function($query) use ($request){
+                    $query->where('residency_position_applications.student_id', $request->id);
+                });
+            })
             ->orderBy('match_score', 'DESC')
             ->get();
     }
