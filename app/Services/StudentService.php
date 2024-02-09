@@ -123,15 +123,10 @@ class StudentService {
     public function getMatches($studentId): array
     {
         return ResidencyPositionMatch::query()
-            ->where('student_id', '=', $request->id)
-            ->whereDoesntHave('student', function($query) use ($request){
-                $query->whereHas('residencyPositionApplications', function($query) use ($request){
-                    $query->where('residency_position_applications.student_id', $request->id);
-                });
-            })
+            ->where('student_id', '=', $studentId)
             ->orderBy('match_score', 'DESC')
             ->get()
-            ->toArray(); // Convert the collection to an array
+            ->toArray();
     }
 
     public function createStudentGrade(CreateStudentGradeRequest $request): StudentGrade

@@ -106,10 +106,10 @@ class DoctorController extends Controller
 
     public function createResidencyPosition(CreateResidencyPositionRequest $request)
     {
-        if($request->doctor_id !== auth()->user()->doctor?->id){
+        if($request->doctor_id != auth()->user()->doctor?->id){
             return $this->error('', 'Unauthorized', 403);
         }
-
+ 
         return $this->success([
             'position' => $this->doctorService->createResidencyPosition($request)
         ]);

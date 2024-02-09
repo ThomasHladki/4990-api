@@ -15,16 +15,6 @@ class EducationalInstitutionSeeder extends Seeder
     public function run(): void
     {
         try {
-            DB::table('educational_institutions')->insert([
-                'name' => 'University of Windsor',
-                'medical_school_name' => 'Schulich School of Medicine & Dentistry',
-                'street_address' => '123 University Avenue',
-                'city' => 'Windsor',
-                'province' => 'Ontario',
-                'postal_code' => 'N1A 2B3',
-                'email_domain' => 'uwindsor.ca',
-            ]);
-
             EducationalInstitution::create([
                 'name' => 'University of Toronto',
                 'medical_school_name' => 'University of Toronto Faculty of Medicine',
