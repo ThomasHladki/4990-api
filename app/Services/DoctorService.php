@@ -125,7 +125,7 @@ class DoctorService {
                 'status' => ResidencyPosition::STATUS_OPEN, 
                 'description' => $request->description, 
                 'medical_discipline' => $request->medical_discipline, 
-                'doctor_id' => $doctor_id, 
+                'doctor_id' => $request->doctor_id, 
                 'medical_institution_id' => $request->medical_institution_id, 
                 'grade_avg_requirement' => $request->grade_avg_requirement, 
                 'letter_of_reccomendation_req' => $request->letter_of_reccomendation_req, 
