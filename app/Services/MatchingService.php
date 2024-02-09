@@ -120,7 +120,7 @@ class MatchingService{
 
     public function matchOnPositionUpdate(int $position_id){
         ResidencyPositionMatch::query()
-            ->where('position_id', '=', $position_id)
+            ->where('residency_position_id', '=', $position_id)
             ->delete();
 
         $query = Student::query();
