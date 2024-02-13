@@ -98,7 +98,7 @@ class DoctorService {
     {
         return ResidencyPosition::query()
             ->where('doctor_id', '=', $request->id)
-            ->get();
+            ->get()->toArray();
     }
 
     public function viewApplicationsForPosition(IdRequest $request)
@@ -197,15 +197,15 @@ class DoctorService {
             $position->grade_avg_requirement = $request->grade_avg_requirement;
         }
 
-        if($request->letter_of_reccomendation_req){
+        if($request->has('letter_of_reccomendation_req')){
             $position->letter_of_reccomendation_req = $request->letter_of_reccomendation_req;
         }
         
-        if($request->research_focused){
+        if($request->has('research_focused')){
             $position->research_focused = $request->research_focused;
         }
 
-        if($request->prefers_new_grads){
+        if($request->has('prefers_new_grads')){
             $position->prefers_new_grads = $request->prefers_new_grads;
         }
 

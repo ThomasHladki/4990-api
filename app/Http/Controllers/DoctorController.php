@@ -69,7 +69,7 @@ class DoctorController extends Controller
     }
 
     public function viewResidencyPositions(IdRequest $request){
-        if($request->id !== auth()->user()->doctor?->id){
+        if(intval($request->id) !== auth()->user()->doctor?->id){
             return $this->error('', 'Unauthorized', 403);
         }
 
