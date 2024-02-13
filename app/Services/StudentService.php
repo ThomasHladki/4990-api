@@ -9,6 +9,7 @@ use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\EducationalInstitution;
+use App\Models\ResidencyPosition;
 use App\Models\ResidencyPositionApplication;
 use App\Models\ResidencyPositionMatch;
 use App\Models\Student;
@@ -122,9 +123,14 @@ class StudentService {
 
     public function getMatches($studentId): array
     {
-        return ResidencyPositionMatch::query()
-            ->where('student_id', '=', $studentId)
-            ->orderBy('match_score', 'DESC')
+        return ResidencyPosition::query()
+            ->whereDoesntHave('residencyPositionApplications', function($q) use ($studentId){
+                $q->where('student_id', '=', $studentId);
+            })
+            ->whereHas('residencyPositionMatches', function($q) use ($studentId){
+                $q->where('student_id', '=', $studentId)
+                    ->orderBy('match_score', 'DESC');
+            })
             ->get()
             ->toArray();
     }
