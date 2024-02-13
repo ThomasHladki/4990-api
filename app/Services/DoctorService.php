@@ -98,7 +98,7 @@ class DoctorService {
     {
         return ResidencyPosition::query()
             ->where('doctor_id', '=', $request->id)
-            ->get();
+            ->get()->toArray();
     }
 
     public function viewApplicationsForPosition(IdRequest $request)

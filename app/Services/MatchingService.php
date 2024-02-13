@@ -29,7 +29,7 @@ class MatchingService{
 
         $score = 0;
         $gradeAverage = 0.0;
-        $studentGrades = $student->studentGradesGrades()->get()->all();
+        $studentGrades = $student->studentGrades()->get()->all();
 
         $gradeSum = 0;
         $count = 0;
