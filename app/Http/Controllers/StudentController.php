@@ -28,9 +28,6 @@ class StudentController extends Controller
 
     public function getStudent(IdRequest $request)
     {
-        if($request->id !== auth()->user()->student?->id){
-            return $this->error('', 'Unauthorized', 403);
-        }
         $student = $this->studentService->getStudent($request);
         if(!$student){
             return $this->error('', 'No student found', 404);
