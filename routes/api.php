@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Doesn't require token to be passed
 
 Route::get('/test', [AuthController::class, 'test']); 
+Route::get('/test2', [AuthController::class, 'test2']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 

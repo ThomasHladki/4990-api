@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IdRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Models\EducationalInstitution;
 use App\Traits\HttpResponses;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -76,6 +77,15 @@ class AuthController extends Controller
     public function test()
     {
         return $this->success(['message' => 'API OK']);
+    }
+
+    public function test2()
+    {
+        $resp = EducationalInstitution::query()
+            ->get();
+        return $this->success([
+            '$response' => $resp
+        ]);
     }
 
 }
