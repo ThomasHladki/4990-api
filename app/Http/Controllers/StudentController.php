@@ -164,7 +164,7 @@ class StudentController extends Controller
 
     public function applyForPosition(CreateResidencyPositionApplication $request)
     {
-        if($request->student_id !== auth()->user()->student?->id){
+        if($request->student_id != auth()->user()->student?->id){
             return $this->error('', 'Unauthorized', 403);
         }
 

@@ -132,7 +132,7 @@ class DoctorService {
                 'research_focused' => $request->research_focused, 
                 'prefers_new_grads' => $request->prefers_new_grads, 
             ]);
-        //$this->matchingService->matchOnPositionUpdate($position->id);
+        $this->matchingService->matchOnPositionUpdate($position->id);
         return $position;
     }
 

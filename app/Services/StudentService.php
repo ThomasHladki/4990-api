@@ -218,10 +218,18 @@ class StudentService {
 
     public function applyForPosition(CreateResidencyPositionApplication $request): bool
     {
-        return ResidencyPositionApplication::create([
+        /* return ResidencyPositionApplication::create([
                 'student_id' => $request->student_id,
                 'residency_position_id' => $request->residency_position_id,
                 'message' => $request->message
-            ]);
+            ]); */
+        $application = ResidencyPositionApplication::create([
+            'student_id' => $request->student_id,
+            'residency_position_id' => $request->residency_position_id,                
+            'message' => $request->message
+        ]);
+        
+            // Check if the application was successfully created
+            return $application != null;
     }
 }
