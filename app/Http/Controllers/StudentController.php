@@ -85,7 +85,7 @@ class StudentController extends Controller
 
     public function createStudentGrade(CreateStudentGradeRequest $request)
     {
-        if($request->student_id !== auth()->user()->student?->id){
+        if($request->student_id != auth()->user()->student?->id){
             return $this->error('', 'Unauthorized', 403);
         }
         return $this->success([
