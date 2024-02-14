@@ -198,11 +198,15 @@ class StudentService {
         return $delete;
     }
 
-    public function getAllApplications(IdRequest $request): array
+    public function getAllApplications($studentId): array
     {
-        return ResidencyPositionApplication::query()
+        /* return ResidencyPositionApplication::query()
             ->where('student_id', '=', $request->id)
-            ->get();
+            ->get(); */
+        return ResidencyPositionApplication::query()
+            ->where('student_id', $studentId)
+            ->get()
+            ->toArray();
 
     }
 
