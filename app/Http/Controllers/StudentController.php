@@ -60,7 +60,7 @@ class StudentController extends Controller
 
     public function getGrades(IdRequest $request)
     {
-        if($request->id !== auth()->user()->student?->id){
+        if(auth()->user() == null){
             return $this->error('', 'Unauthorized', 403);
         }
         return $this->success([

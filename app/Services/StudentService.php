@@ -109,7 +109,7 @@ class StudentService {
     {
         return StudentGrade::query()
             ->where('student_id', '=', $request->id)
-            ->get();
+            ->get()->toArray();
     }
 
     public function getLocationPreference(IdRequest $request): StudentLocationPreference|null
