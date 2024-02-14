@@ -78,16 +78,6 @@ class AuthController extends Controller
     {
         return $this->success(['message' => 'API OK']);
     }
-
-    public function test2()
-    {
-        $resp = EducationalInstitution::query()
-            ->get();
-        return $this->success([
-            '$response' => $resp
-        ]);
-    }
-
 }
 
 
