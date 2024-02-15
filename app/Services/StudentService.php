@@ -203,8 +203,12 @@ class StudentService {
         /* return ResidencyPositionApplication::query()
             ->where('student_id', '=', $request->id)
             ->get(); */
-        return ResidencyPositionApplication::query()
+        /* return ResidencyPositionApplication::query()
             ->where('student_id', $studentId)
+            ->get()
+            ->toArray(); */
+        return ResidencyPositionApplication::with('residencyPosition')
+            ->where('student_id', '=', $studentId)
             ->get()
             ->toArray();
 
