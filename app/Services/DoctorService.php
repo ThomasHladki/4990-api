@@ -101,6 +101,7 @@ class DoctorService {
             ->get()->toArray();
     }
 
+    //imp..
     public function viewApplicationsForPosition(IdRequest $request)
     {
         //$request->id for position id in this case
@@ -109,6 +110,7 @@ class DoctorService {
             ->get();
     }
 
+    //use to view all apps
     public function viewAllApplications(IdRequest $request)
     {
         //$request->id for doctor id in this case

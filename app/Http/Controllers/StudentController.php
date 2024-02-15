@@ -60,7 +60,7 @@ class StudentController extends Controller
 
     public function getGrades(IdRequest $request)
     {
-        if($request->id !== auth()->user()->student?->id){
+        if(auth()->user() == null){
             return $this->error('', 'Unauthorized', 403);
         }
         return $this->success([
@@ -85,7 +85,7 @@ class StudentController extends Controller
 
     public function createStudentGrade(CreateStudentGradeRequest $request)
     {
-        if($request->student_id !== auth()->user()->student?->id){
+        if($request->student_id != auth()->user()->student?->id){
             return $this->error('', 'Unauthorized', 403);
         }
         return $this->success([
@@ -133,13 +133,24 @@ class StudentController extends Controller
         ]);
     }
 
-    public function getAllApplications(IdRequest $request)
+    public function getAllApplications()
     {
-        if($request->id !== auth()->user()->student?->id){
+        /* if($request->id != auth()->user()->student?->id){
             return $this->error('', 'Unauthorized', 403);
         }
         return $this->success([
             'applications' => $this->studentService->getAllApplications($request)
+        ]); */
+        $studentId = auth()->user()->student->id; // Assuming there's a one-to-one relationship between User and Student
+
+        if (!$studentId) {
+            return $this->error('', 'Unauthorized', 403);
+        }
+
+        $applications = $this->studentService->getAllApplications($studentId); // Adjust the service method accordingly
+
+        return $this->success([
+            'applications' => $applications
         ]);
     }
 
