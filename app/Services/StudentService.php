@@ -230,7 +230,8 @@ class StudentService {
         $application = ResidencyPositionApplication::create([
             'student_id' => $request->student_id,
             'residency_position_id' => $request->residency_position_id,                
-            'message' => $request->message
+            'message' => $request->message,
+            'status' => ResidencyPositionApplication::STATUS_OPEN
         ]);
         
             // Check if the application was successfully created

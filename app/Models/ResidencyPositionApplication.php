@@ -17,7 +17,8 @@ class ResidencyPositionApplication extends Model
     protected $fillable = [
         'student_id',
         'residency_position_id',
-        'message'
+        'message',
+        'status'
     ];
 
     public function student(): BelongsTo
