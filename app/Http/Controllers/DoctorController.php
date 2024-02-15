@@ -34,9 +34,11 @@ class DoctorController extends Controller
     }
 
     public function createDoctor(CreateDoctorRequest $request){
-        $status = $this->doctorService->createDoctor($request);
-        if($status){
-            return $this->success('Created');
+        $doctor = $this->doctorService->createDoctor($request);
+        if($doctor){
+            return $this->success([
+                'doctor' => $doctor
+            ]);
         }
 
         return $this->error('Could not create', 'Request failed', 400);
@@ -48,11 +50,11 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function createMedicalInstitution(CreateEducationalInstitutionRequest $request){
-        return $this->success([
-            'insitution' => $this->doctorService->createMedicalInstitution($request)
-        ]);
-    }
+    // public function createMedicalInstitution(CreateEducationalInstitutionRequest $request){
+    //     return $this->success([
+    //         'insitution' => $this->doctorService->createMedicalInstitution($request)
+    //     ]);
+    // }
 
     public function updateDoctor(UpdateDoctorRequest $request){
 
