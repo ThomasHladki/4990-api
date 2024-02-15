@@ -52,17 +52,17 @@ class DoctorService {
             ->get();
     }
 
-    public function createMedicalInstitution(CreateEducationalInstitutionRequest $request){
-        return EducationalInstitution::create([
-            'name' => $request->name,
-            'medical_school_name' => $request->medical_school_name,
-            'street_address' => $request->street_address,
-            'city' => $request->city,
-            'province' => $request->province,
-            'postal_code' => $request->postal_code,
-            'email_domain' => $request->email_domain
-        ]);
-    }
+    // public function createMedicalInstitution(CreateEducationalInstitutionRequest $request){
+    //     return MedicalInstitution::create([
+    //         'name' => $request->name,
+    //         'medical_school_name' => $request->medical_school_name,
+    //         'street_address' => $request->street_address,
+    //         'city' => $request->city,
+    //         'province' => $request->province,
+    //         'postal_code' => $request->postal_code,
+    //         'email_domain' => $request->email_domain
+    //     ]);
+    // }
 
     public function updateDoctor(UpdateDoctorRequest $request): bool
     {
