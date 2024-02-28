@@ -39,7 +39,7 @@ class StudentController extends Controller
 
     public function getEducationalInstitutions(){
         return $this->success([
-            'institutions' => $this->studentService
+            'institutions' => $this->studentService->getEducationalInstitutions()
         ]);
     }
 

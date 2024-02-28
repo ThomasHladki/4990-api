@@ -16,7 +16,6 @@ use App\Models\Student;
 use App\Models\StudentGrade;
 use App\Models\StudentLocationPreference;
 
-
 class StudentService {
 
     private MatchingService $matchingService;
